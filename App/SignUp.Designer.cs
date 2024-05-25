@@ -44,6 +44,10 @@
             this.btnClose = new System.Windows.Forms.Button();
             this.textError = new System.Windows.Forms.Label();
             this.panel4 = new System.Windows.Forms.Panel();
+            this.radioButtonInnovator = new System.Windows.Forms.RadioButton();
+            this.radioButtonDeveloper = new System.Windows.Forms.RadioButton();
+            this.radioButtonInvestor = new System.Windows.Forms.RadioButton();
+            this.label6 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel3.SuspendLayout();
@@ -53,7 +57,7 @@
             // panel1
             // 
             this.panel1.Controls.Add(this.btnSignup);
-            this.panel1.Location = new System.Drawing.Point(11, 467);
+            this.panel1.Location = new System.Drawing.Point(11, 556);
             this.panel1.Margin = new System.Windows.Forms.Padding(2);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(378, 72);
@@ -116,7 +120,7 @@
             // pass
             // 
             this.pass.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.pass.Location = new System.Drawing.Point(72, 209);
+            this.pass.Location = new System.Drawing.Point(72, 202);
             this.pass.Margin = new System.Windows.Forms.Padding(2);
             this.pass.Name = "pass";
             this.pass.Size = new System.Drawing.Size(250, 31);
@@ -127,7 +131,7 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label3.Location = new System.Drawing.Point(78, 190);
+            this.label3.Location = new System.Drawing.Point(78, 183);
             this.label3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(56, 16);
@@ -137,7 +141,7 @@
             // name
             // 
             this.name.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.name.Location = new System.Drawing.Point(72, 279);
+            this.name.Location = new System.Drawing.Point(72, 261);
             this.name.Margin = new System.Windows.Forms.Padding(2);
             this.name.Name = "name";
             this.name.Size = new System.Drawing.Size(250, 31);
@@ -147,7 +151,7 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label4.Location = new System.Drawing.Point(78, 261);
+            this.label4.Location = new System.Drawing.Point(78, 243);
             this.label4.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(33, 16);
@@ -157,7 +161,7 @@
             // surname
             // 
             this.surname.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.surname.Location = new System.Drawing.Point(72, 354);
+            this.surname.Location = new System.Drawing.Point(72, 318);
             this.surname.Margin = new System.Windows.Forms.Padding(2);
             this.surname.Name = "surname";
             this.surname.Size = new System.Drawing.Size(250, 31);
@@ -167,7 +171,7 @@
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label5.Location = new System.Drawing.Point(78, 336);
+            this.label5.Location = new System.Drawing.Point(78, 300);
             this.label5.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(66, 16);
@@ -217,19 +221,70 @@
             // panel4
             // 
             this.panel4.Controls.Add(this.textError);
-            this.panel4.Location = new System.Drawing.Point(11, 413);
+            this.panel4.Location = new System.Drawing.Point(11, 500);
             this.panel4.Margin = new System.Windows.Forms.Padding(2);
             this.panel4.Name = "panel4";
             this.panel4.Size = new System.Drawing.Size(378, 50);
             this.panel4.TabIndex = 8;
             // 
+            // radioButtonInnovator
+            // 
+            this.radioButtonInnovator.AutoSize = true;
+            this.radioButtonInnovator.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.radioButtonInnovator.Location = new System.Drawing.Point(72, 391);
+            this.radioButtonInnovator.Name = "radioButtonInnovator";
+            this.radioButtonInnovator.Size = new System.Drawing.Size(98, 20);
+            this.radioButtonInnovator.TabIndex = 9;
+            this.radioButtonInnovator.TabStop = true;
+            this.radioButtonInnovator.Text = "Инноватор";
+            this.radioButtonInnovator.UseVisualStyleBackColor = true;
+            // 
+            // radioButtonDeveloper
+            // 
+            this.radioButtonDeveloper.AutoSize = true;
+            this.radioButtonDeveloper.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.radioButtonDeveloper.Location = new System.Drawing.Point(72, 420);
+            this.radioButtonDeveloper.Name = "radioButtonDeveloper";
+            this.radioButtonDeveloper.Size = new System.Drawing.Size(112, 20);
+            this.radioButtonDeveloper.TabIndex = 9;
+            this.radioButtonDeveloper.TabStop = true;
+            this.radioButtonDeveloper.Text = "Разработчик";
+            this.radioButtonDeveloper.UseVisualStyleBackColor = true;
+            // 
+            // radioButtonInvestor
+            // 
+            this.radioButtonInvestor.AutoSize = true;
+            this.radioButtonInvestor.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.radioButtonInvestor.Location = new System.Drawing.Point(72, 446);
+            this.radioButtonInvestor.Name = "radioButtonInvestor";
+            this.radioButtonInvestor.Size = new System.Drawing.Size(89, 20);
+            this.radioButtonInvestor.TabIndex = 9;
+            this.radioButtonInvestor.TabStop = true;
+            this.radioButtonInvestor.Text = "Инвестор";
+            this.radioButtonInvestor.UseVisualStyleBackColor = true;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label6.Location = new System.Drawing.Point(78, 362);
+            this.label6.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(142, 16);
+            this.label6.TabIndex = 2;
+            this.label6.Text = "Выберите свою роль";
+            // 
             // SignUp
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(400, 550);
+            this.ClientSize = new System.Drawing.Size(400, 639);
+            this.Controls.Add(this.radioButtonInvestor);
+            this.Controls.Add(this.radioButtonDeveloper);
+            this.Controls.Add(this.radioButtonInnovator);
             this.Controls.Add(this.panel4);
             this.Controls.Add(this.panel3);
+            this.Controls.Add(this.label6);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
@@ -272,6 +327,10 @@
         private System.Windows.Forms.Button btnClose;
         private System.Windows.Forms.Label textError;
         private System.Windows.Forms.Panel panel4;
+        private System.Windows.Forms.RadioButton radioButtonInnovator;
+        private System.Windows.Forms.RadioButton radioButtonDeveloper;
+        private System.Windows.Forms.RadioButton radioButtonInvestor;
+        private System.Windows.Forms.Label label6;
     }
 }
 

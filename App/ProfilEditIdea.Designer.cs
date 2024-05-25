@@ -1,6 +1,6 @@
 ﻿namespace App
 {
-    partial class AdminEditIdea
+    partial class ProfilEditIdea
     {
         /// <summary>
         /// Required designer variable.
@@ -30,13 +30,11 @@
         {
             this.panel2 = new System.Windows.Forms.Panel();
             this.btnClose = new System.Windows.Forms.Button();
-            this.btnSave = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.textDescription = new System.Windows.Forms.TextBox();
             this.textTitle = new System.Windows.Forms.TextBox();
-            this.comboBoxStatus = new System.Windows.Forms.ComboBox();
-            this.label3 = new System.Windows.Forms.Label();
+            this.btnSave = new System.Windows.Forms.Button();
             this.panel2.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -48,8 +46,8 @@
             this.panel2.Location = new System.Drawing.Point(0, 0);
             this.panel2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(797, 30);
-            this.panel2.TabIndex = 4;
+            this.panel2.Size = new System.Drawing.Size(800, 30);
+            this.panel2.TabIndex = 5;
             this.panel2.MouseDown += new System.Windows.Forms.MouseEventHandler(this.panel2_MouseDown);
             this.panel2.MouseMove += new System.Windows.Forms.MouseEventHandler(this.panel2_MouseMove);
             this.panel2.MouseUp += new System.Windows.Forms.MouseEventHandler(this.panel2_MouseUp);
@@ -60,7 +58,7 @@
             this.btnClose.Dock = System.Windows.Forms.DockStyle.Right;
             this.btnClose.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.btnClose.ForeColor = System.Drawing.Color.White;
-            this.btnClose.Location = new System.Drawing.Point(722, 0);
+            this.btnClose.Location = new System.Drawing.Point(725, 0);
             this.btnClose.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(75, 30);
@@ -69,96 +67,73 @@
             this.btnClose.UseVisualStyleBackColor = false;
             this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
             // 
-            // btnSave
-            // 
-            this.btnSave.Location = new System.Drawing.Point(271, 430);
-            this.btnSave.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.btnSave.Name = "btnSave";
-            this.btnSave.Size = new System.Drawing.Size(223, 65);
-            this.btnSave.TabIndex = 5;
-            this.btnSave.Text = "Сохранить";
-            this.btnSave.UseVisualStyleBackColor = true;
-            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
-            // 
             // label2
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label2.Location = new System.Drawing.Point(40, 153);
+            this.label2.Location = new System.Drawing.Point(40, 149);
             this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(139, 31);
-            this.label2.TabIndex = 10;
+            this.label2.TabIndex = 15;
             this.label2.Text = "Описание";
             // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label1.Location = new System.Drawing.Point(40, 64);
+            this.label1.Location = new System.Drawing.Point(40, 60);
             this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(137, 31);
-            this.label1.TabIndex = 11;
+            this.label1.TabIndex = 16;
             this.label1.Text = "Название";
             // 
             // textDescription
             // 
             this.textDescription.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.textDescription.Location = new System.Drawing.Point(44, 187);
-            this.textDescription.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.textDescription.Location = new System.Drawing.Point(44, 183);
+            this.textDescription.Margin = new System.Windows.Forms.Padding(4);
             this.textDescription.Multiline = true;
             this.textDescription.Name = "textDescription";
             this.textDescription.Size = new System.Drawing.Size(707, 169);
-            this.textDescription.TabIndex = 8;
+            this.textDescription.TabIndex = 13;
             // 
             // textTitle
             // 
             this.textTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.textTitle.Location = new System.Drawing.Point(44, 98);
-            this.textTitle.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.textTitle.Location = new System.Drawing.Point(44, 94);
+            this.textTitle.Margin = new System.Windows.Forms.Padding(4);
             this.textTitle.Name = "textTitle";
             this.textTitle.Size = new System.Drawing.Size(372, 26);
-            this.textTitle.TabIndex = 9;
+            this.textTitle.TabIndex = 14;
             // 
-            // comboBoxStatus
+            // btnSave
             // 
-            this.comboBoxStatus.FormattingEnabled = true;
-            this.comboBoxStatus.Location = new System.Drawing.Point(485, 98);
-            this.comboBoxStatus.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.comboBoxStatus.Name = "comboBoxStatus";
-            this.comboBoxStatus.Size = new System.Drawing.Size(244, 24);
-            this.comboBoxStatus.TabIndex = 12;
+            this.btnSave.Location = new System.Drawing.Point(280, 400);
+            this.btnSave.Margin = new System.Windows.Forms.Padding(4);
+            this.btnSave.Name = "btnSave";
+            this.btnSave.Size = new System.Drawing.Size(223, 65);
+            this.btnSave.TabIndex = 12;
+            this.btnSave.Text = "Сохранить";
+            this.btnSave.UseVisualStyleBackColor = true;
+            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label3.Location = new System.Drawing.Point(489, 64);
-            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(101, 31);
-            this.label3.TabIndex = 11;
-            this.label3.Text = "Статус";
-            // 
-            // AdminEditIdea
+            // ProfilEditIdea
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(797, 554);
-            this.Controls.Add(this.comboBoxStatus);
+            this.ClientSize = new System.Drawing.Size(800, 500);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.label3);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.textDescription);
             this.Controls.Add(this.textTitle);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.panel2);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.Name = "AdminEditIdea";
+            this.Name = "ProfilEditIdea";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "AdminEditIdea";
+            this.Text = "ProfilEditIdea";
             this.panel2.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -169,12 +144,10 @@
 
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Button btnClose;
-        private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox textDescription;
         private System.Windows.Forms.TextBox textTitle;
-        private System.Windows.Forms.ComboBox comboBoxStatus;
-        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Button btnSave;
     }
 }

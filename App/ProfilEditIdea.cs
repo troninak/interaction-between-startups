@@ -7,11 +7,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Windows.Forms.VisualStyles;
 
 namespace App
 {
-    public partial class AdminEditIdea : Form
+    public partial class ProfilEditIdea : Form
     {
         // Настройка окна
         private bool isDragging = false;
@@ -88,28 +87,6 @@ namespace App
             base.WndProc(ref m);
         }
 
-
-
-        // Основной код
-        private string userId;
-        private string ideaId;
-        private DataBase db = new DataBase();
-
-        public AdminEditIdea(string userId, string ideaId, string ideaTitle, string ideaDescription, string ideaStatus)
-        {
-            InitializeComponent();
-            this.ideaId = ideaId;
-            this.userId = userId;
-            textTitle.Text = ideaTitle;
-            textDescription.Text = ideaDescription;
-            comboBoxStatus.Text = ideaStatus;
-        }
-
-        private void btnClose_Click(object sender, EventArgs e)
-        {
-            this.Close();
-        }
-
         private void panel2_MouseDown(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
@@ -137,23 +114,55 @@ namespace App
             }
         }
 
-        private void btnSave_Click(object sender, EventArgs e)
+        //Основной код
+        public int ideaId;
+        private DataBase db;
+
+        public ProfilEditIdea(int ideaId)
+        {
+            InitializeComponent();
+            this.ideaId = ideaId;
+            db = new DataBase(); // Инициализируйте экземпляр класса DataBase
+            LoadIdeaData();
+        }
+
+        private void LoadIdeaData()
         {
             try
             {
-                string newTitle = textTitle.Text;
-                string newDescription = textDescription.Text;
-                string newStatus = comboBoxStatus.Text;
+                DataRow ideaData = db.GetIdeaById(ideaId); // Предполагается, что у вас есть метод для получения данных по id
+                if (ideaData != null)
+                {
+                    textTitle.Text = ideaData["idea_title"].ToString();
+                    textDescription.Text = ideaData["idea_description"].ToString();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Ошибка при загрузке данных идеи: " + ex.Message);
+            }
+        }
 
-                db.UpdateIdeaData(ideaId, newTitle, newDescription, newStatus);
+        private void btnSave_Click(object sender, EventArgs e)
+        {
+            string newTitle = textTitle.Text;
+            string newDescription = textDescription.Text;
 
-                MessageBox.Show("Идея успешно обновлена.");
-                this.Close();
+            try
+            {
+                db.UpdateIdeaData(ideaId.ToString(), newTitle, newDescription, ""); // Передаем пустую строку для статуса
+                MessageBox.Show("Идея успешно обновлена!");
+                this.Close(); // Закрываем форму после успешного обновления
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Ошибка при обновлении идеи: " + ex.Message);
             }
+        }
+
+        private void btnClose_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }

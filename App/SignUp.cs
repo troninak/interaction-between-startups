@@ -117,7 +117,6 @@ namespace App
         }
 
         // Основной код
-
         public SignUp()
         {
             InitializeComponent();
@@ -129,6 +128,27 @@ namespace App
             main.Show();
             this.Close();
         }
+
+        private int GetSelectedRoleId()
+        {
+            if (radioButtonInnovator.Checked)
+            {
+                return 1;
+            }
+            else if (radioButtonDeveloper.Checked)
+            {
+                return 2;
+            }
+            else if (radioButtonInvestor.Checked)
+            {
+                return 3;
+            }
+            else
+            {
+                return -1; // Если ни одна из ролей не выбрана
+            }
+        }
+
 
         private void btnSignup_Click(object sender, EventArgs e)
         {
@@ -143,11 +163,17 @@ namespace App
                 return;
             }
 
+            int roleId = GetSelectedRoleId();
+
+            if (roleId == -1)
+            {
+                textError.Text = "Выберите роль пользователя!";
+                return;
+            }
+
             DateTime now = DateTime.Now;
 
             DataBase db = new DataBase();
-
-            DataTable dt = new DataTable();
 
             MySqlCommand command = new MySqlCommand("INSERT INTO `Users` (`name`, `surname`, `email`, `password`, `role_id`, `registration_date`) VALUES (@name, @surname, @email, @password, @role_id, @registration_date)", db.getConn());
 
@@ -155,20 +181,18 @@ namespace App
             command.Parameters.Add("@password", MySqlDbType.VarChar).Value = pass.Text;
             command.Parameters.Add("@name", MySqlDbType.VarChar).Value = name.Text;
             command.Parameters.Add("@surname", MySqlDbType.VarChar).Value = surname.Text;
-            command.Parameters.Add("@role_id", MySqlDbType.VarChar).Value = 1;
-            command.Parameters.Add("@registration_date", MySqlDbType.VarChar).Value = now.ToString("yyyy-MM-dd");
+            command.Parameters.Add("@role_id", MySqlDbType.Int32).Value = roleId;
+            command.Parameters.Add("@registration_date", MySqlDbType.Date).Value = now.ToString("yyyy-MM-dd");
 
             db.openConn();
-            
+
             if (command.ExecuteNonQuery() == 1)
             {
                 // Получаем ID только что зарегистрированного пользователя
                 string userId = db.GetCurrentUserId(email.Text, pass.Text);
 
-                int roleId = db.GetRoleById(userId);
-
                 // Создаем экземпляр формы в зависимости от роли пользователя
-                switch (roleId) // Роль "Инноватор"
+                switch (roleId)
                 {
                     case 1: // Innovator
                         MainInnovator mainInnovator = new MainInnovator(userId);

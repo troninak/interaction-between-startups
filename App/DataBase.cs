@@ -12,7 +12,7 @@ namespace App
 {
     internal class DataBase
     {
-        MySqlConnection conn = new MySqlConnection("server = localhost; port = 3306; username = root; password =; database = troninak");
+        MySqlConnection conn = new MySqlConnection("server = localhost; port = 3306; username = root; password =; database = innovation_platform");
 
         public void openConn()
         {
@@ -55,6 +55,36 @@ namespace App
             return userData;
         }
 
+        public DataRow GetUserDataProfil(string userId)
+        {
+            DataTable userData = new DataTable();
+            try
+            {
+                openConn();
+
+                string query = "SELECT user_id, name, surname, email, password, role_id, registration_date, photo_path FROM Users WHERE user_id = @userId";
+
+                MySqlCommand command = new MySqlCommand(query, conn);
+                command.Parameters.AddWithValue("@userId", userId);
+                MySqlDataAdapter adapter = new MySqlDataAdapter(command);
+
+                adapter.Fill(userData);
+            }
+            finally
+            {
+                closeConn();
+            }
+
+            if (userData.Rows.Count > 0)
+            {
+                return userData.Rows[0];
+            }
+            else
+            {
+                throw new Exception("Пользователь не найден.");
+            }
+        }
+
         //Получение информации о идеях
         public DataTable GetIdeaData()
         {
@@ -76,6 +106,38 @@ namespace App
                 conn.Close();
             }
             return dataTable;
+        }
+
+        // Метод для получения данных идеи по ID
+        public DataRow GetIdeaById(int ideaId)
+        {
+            DataTable dataTable = new DataTable();
+            try
+            {
+                conn.Open();
+                string query = "SELECT idea_id, user_id, idea_title, idea_description, creation_date, status FROM Ideas WHERE idea_id = @ideaId";
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@ideaId", ideaId);
+                MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
+                adapter.Fill(dataTable);
+
+                if (dataTable.Rows.Count > 0)
+                {
+                    return dataTable.Rows[0];
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Ошибка при получении данных идеи: " + ex.Message);
+            }
+            finally
+            {
+                conn.Close();
+            }
         }
 
         // Метод для удаления идем из базы данных
@@ -429,5 +491,85 @@ namespace App
                 closeConn();
             }
         }
+
+        // Добавление идей в разработку
+        public void AddProject(int ideaId, string developerId, string description)
+        {
+            string query = "INSERT INTO Projects (idea_id, developer_id, project_description, start_date) VALUES (@ideaId, @developerId, @description, @startDate)";
+
+            using (MySqlCommand cmd = new MySqlCommand(query, conn))
+            {
+                cmd.Parameters.AddWithValue("@ideaId", ideaId);
+                cmd.Parameters.AddWithValue("@developerId", developerId);
+                cmd.Parameters.AddWithValue("@description", description);
+                cmd.Parameters.AddWithValue("@startDate", DateTime.Now);
+
+                openConn();
+                cmd.ExecuteNonQuery();
+                closeConn();
+            }
+        }
+        
+        // Получение идей взятых в разработку пользователем
+        public DataTable GetDeveloperProjects(string developerId)
+        {
+            string query = "SELECT Ideas.* FROM Projects INNER JOIN Ideas ON Projects.idea_id = Ideas.idea_id WHERE Projects.developer_id = @developerId";
+
+            using (MySqlCommand cmd = new MySqlCommand(query, conn))
+            {
+                cmd.Parameters.AddWithValue("@developerId", developerId);
+
+                MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
+                DataTable dt = new DataTable();
+                adapter.Fill(dt);
+
+                return dt;
+            }
+        }
+
+        // Проверка, взята ли идея пользователем
+        public bool IsIdeaTakenByUser(int ideaId, string userId)
+        {
+            try
+            {
+                openConn();
+
+                string query = "SELECT COUNT(*) FROM Projects WHERE idea_id = @ideaId AND developer_id = @userId";
+
+                MySqlCommand command = new MySqlCommand(query, conn);
+                command.Parameters.AddWithValue("@ideaId", ideaId);
+                command.Parameters.AddWithValue("@userId", userId);
+
+                int count = Convert.ToInt32(command.ExecuteScalar());
+                return count > 0;
+            }
+            finally
+            {
+                closeConn();
+            }
+        }
+
+        // Удаление записи проекта
+        public void RemoveProject(int ideaId, string userId)
+        {
+            try
+            {
+                openConn();
+
+                string query = "DELETE FROM Projects WHERE idea_id = @ideaId AND developer_id = @userId";
+
+                MySqlCommand command = new MySqlCommand(query, conn);
+                command.Parameters.AddWithValue("@ideaId", ideaId);
+                command.Parameters.AddWithValue("@userId", userId);
+
+                command.ExecuteNonQuery();
+            }
+            finally
+            {
+                closeConn();
+            }
+        }
+
+
     }
 }

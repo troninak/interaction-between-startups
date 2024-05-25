@@ -160,7 +160,7 @@ namespace App
         }
 
         // Динамическок создание блока с информацией об идеях и добавлять их в panelIdea
-        public void LoadIdeaData()
+        public void LoadIdeaData(string sortOrder = "Descending")
         {
             try
             {
@@ -173,6 +173,17 @@ namespace App
                 // Получаем данные из базы данных с помощью метода класса DataBase
                 DataTable ideaData = db.GetIdeaData();
 
+                // Сортируем данные по дате создания
+                if (sortOrder == "Ascending")
+                {
+                    ideaData.DefaultView.Sort = "creation_date ASC";
+                }
+                else
+                {
+                    ideaData.DefaultView.Sort = "creation_date DESC";
+                }
+                DataTable sortedIdeaData = ideaData.DefaultView.ToTable();
+
                 // Получаем ширину panelIdea с учетом полосы прокрутки
                 int panelIdeaWidth = panelIdea.ClientSize.Width - SystemInformation.VerticalScrollBarWidth - 20;
 
@@ -180,56 +191,66 @@ namespace App
                 int currentY = 10; // Отступ от верхней границы panelIdea
 
                 // Пробегаемся по каждой строке и создаем блоки
-                foreach (DataRow row in ideaData.Rows)
+                foreach (DataRow row in sortedIdeaData.Rows)
                 {
                     DateTime creationDate = Convert.ToDateTime(row["creation_date"]);
                     string formattedDate = creationDate.ToString("yyyy-MM-dd");
                     string userId = row["user_id"].ToString();
+                    int ideaId = Convert.ToInt32(row["idea_id"]);
 
                     // Получаем имя пользователя по userId
                     User user = db.GetUserById(userId);
                     string userName = user != null ? $"{user.Name} {user.Surname}" : "Неизвестный пользователь";
 
                     // Создаем панель для одной идеи
-                    Panel ideaPanel = new Panel();
-                    ideaPanel.BackColor = Color.White; // Цвет фона панели
-                    ideaPanel.BorderStyle = BorderStyle.None; // Убираем обводку
-                    ideaPanel.BorderStyle = BorderStyle.FixedSingle;
-                    ideaPanel.Width = panelIdeaWidth; // Ширина с учетом полосы прокрутки и отступов
-                    ideaPanel.AutoSize = true;
-                    ideaPanel.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-                    ideaPanel.Location = new Point(10, currentY); // Отступы от левой и верхней границ
+                    Panel ideaPanel = new Panel
+                    {
+                        BackColor = Color.White, // Цвет фона панели
+                        BorderStyle = BorderStyle.FixedSingle,
+                        Size = new Size(panelIdeaWidth, 140), // Ширина с учетом полосы прокрутки и отступов
+                        Location = new Point(10, currentY) // Отступы от левой и верхней границ
+                    };
 
                     // Добавляем метки в панель идеи
-                    Label titleLabel = new Label();
-                    titleLabel.Text = row["idea_title"].ToString();
-                    titleLabel.AutoSize = true;
-                    titleLabel.Location = new Point(10, 10);
+                    Label titleLabel = new Label
+                    {
+                        Text = row["idea_title"].ToString(),
+                        AutoSize = true,
+                        Location = new Point(10, 10)
+                    };
 
-                    Label userLabel = new Label();
-                    userLabel.Text = "Автор: " + userName;
-                    userLabel.AutoSize = true;
-                    userLabel.Location = new Point(10, 30);
+                    Label userLabel = new Label
+                    {
+                        Text = "Автор: " + userName,
+                        AutoSize = true,
+                        Location = new Point(10, 30)
+                    };
 
-                    Label descriptionLabel = new Label();
-                    descriptionLabel.Text = row["idea_description"].ToString();
-                    descriptionLabel.AutoSize = true;
-                    descriptionLabel.MaximumSize = new Size(panelIdeaWidth - 20, 0); // Устанавливаем максимальную ширину и неограниченную высоту
-                    descriptionLabel.Location = new Point(10, 50);
+                    Label descriptionLabel = new Label
+                    {
+                        Text = row["idea_description"].ToString(),
+                        AutoSize = true,
+                        MaximumSize = new Size(panelIdeaWidth - 20, 0), // Устанавливаем максимальную ширину и неограниченную высоту
+                        Location = new Point(10, 50)
+                    };
 
-                    Label dateLabel = new Label();
-                    dateLabel.Text = formattedDate;
-                    dateLabel.AutoSize = true;
-                    dateLabel.Location = new Point(10, 70);
+                    Label dateLabel = new Label
+                    {
+                        Text = formattedDate,
+                        AutoSize = true,
+                        Location = new Point(10, 70)
+                    };
 
                     // Кнопка "Подробнее"
-                    Button detailsButton = new Button();
-                    detailsButton.Text = "Подробнее";
-                    detailsButton.Location = new Point(ideaPanel.Width - 100, 10); // Позиция кнопки "Подробнее"
-                    detailsButton.AutoSize = true;
+                    Button detailsButton = new Button
+                    {
+                        Text = "Подробнее",
+                        Location = new Point(ideaPanel.Width - 100, 10), // Позиция кнопки "Подробнее"
+                        AutoSize = true
+                    };
                     detailsButton.Click += (s, e) => ShowIdeaDetails(row); // Обработчик нажатия
 
-                    // Добавляем метки и кнопку "Подробнее" в панель идеи
+                    // Добавляем метки и кнопки в панель идеи
                     ideaPanel.Controls.Add(titleLabel);
                     ideaPanel.Controls.Add(userLabel);
                     ideaPanel.Controls.Add(descriptionLabel);
@@ -268,9 +289,27 @@ namespace App
             MessageBox.Show($"Заголовок: {title}\n\nАвтор: {userName}\n\nОписание: {description}\n\nДата создания: {formattedDate}", "Подробная информация об идее");
         }
 
-        private void MainInnovator_Load(object sender, EventArgs e)
+        private void btnSave_Click(object sender, EventArgs e)
+        {
+            string sortOrder = comboBoxDate.SelectedItem.ToString();
+            LoadIdeaData(sortOrder);
+        }
+
+        private void btnUpdateIdea_Click(object sender, EventArgs e)
         {
             LoadIdeaData();
+        }
+
+        private void MainInnovator_Load(object sender, EventArgs e)
+        {
+            comboBoxDate.Items.Add("Ascending");
+            comboBoxDate.Items.Add("Descending");
+            comboBoxDate.SelectedIndex = 0; // Установите начальное значение по умолчанию
+
+            btnSave.Click += new EventHandler(btnSave_Click);
+
+            // Инициализация загрузки данных
+            LoadIdeaData("Descending");
         }
     }
 }

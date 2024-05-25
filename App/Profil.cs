@@ -168,14 +168,31 @@ namespace App
         {
             try
             {
+                // Получаем информацию о пользователе
+                DataRow userRow = db.GetUserDataProfil(userId);
+                int userRole = Convert.ToInt32(userRow["role_id"]);
+
                 // Устанавливаем вертикальную прокрутку
                 panelActivity.AutoScroll = true;
 
                 // Очищаем panelActivity перед загрузкой новых данных
                 panelActivity.Controls.Clear();
 
-                // Получаем данные из базы данных с помощью метода класса DataBase
-                DataTable userIdeaData = db.GetUserIdeas(userId);
+                DataTable userIdeaData;
+
+                // Получаем данные из базы данных в зависимости от роли пользователя
+                if (userRole == 1) // Инноватор
+                {
+                    userIdeaData = db.GetUserIdeas(userId);
+                }
+                else if (userRole == 2) // Разработчик
+                {
+                    userIdeaData = db.GetDeveloperProjects(userId);
+                }
+                else
+                {
+                    throw new Exception("Неизвестная роль пользователя.");
+                }
 
                 // Получаем ширину panelActivity с учетом полосы прокрутки
                 int panelActivityWidth = panelActivity.ClientSize.Width - SystemInformation.VerticalScrollBarWidth - 20;
@@ -191,56 +208,85 @@ namespace App
                     string formattedDate = creationDate.ToString("yyyy-MM-dd");
 
                     // Создаем панель для одной идеи
-                    Panel ideaPanel = new Panel();
-                    ideaPanel.BackColor = Color.White; // Цвет фона панели
-                    ideaPanel.BorderStyle = BorderStyle.FixedSingle; // Обводка для разделения блоков
-                    ideaPanel.Size = new Size(panelActivityWidth, 140); // Ширина с учетом полосы прокрутки и отступов
-                    ideaPanel.Location = new Point(10, currentY); // Отступы от левой и верхней границ
+                    Panel ideaPanel = new Panel
+                    {
+                        BackColor = Color.White, // Цвет фона панели
+                        BorderStyle = BorderStyle.FixedSingle, // Обводка для разделения блоков
+                        Size = new Size(panelActivityWidth, 140), // Ширина с учетом полосы прокрутки и отступов
+                        Location = new Point(10, currentY) // Отступы от левой и верхней границ
+                    };
 
                     // Добавляем метки в панель идеи
-                    Label titleLabel = new Label();
-                    titleLabel.Text = row["idea_title"].ToString();
-                    titleLabel.AutoSize = true;
-                    titleLabel.Location = new Point(10, 10);
+                    Label titleLabel = new Label
+                    {
+                        Text = row["idea_title"].ToString(),
+                        AutoSize = true,
+                        Location = new Point(10, 10)
+                    };
 
-                    Label descriptionLabel = new Label();
-                    descriptionLabel.Text = row["idea_description"].ToString();
-                    descriptionLabel.AutoSize = true;
-                    descriptionLabel.Location = new Point(10, 30);
+                    Label descriptionLabel = new Label
+                    {
+                        Text = row["idea_description"].ToString(),
+                        AutoSize = true,
+                        Location = new Point(10, 30)
+                    };
 
-                    Label dateLabel = new Label();
-                    dateLabel.Text = formattedDate;
-                    dateLabel.AutoSize = true;
-                    dateLabel.Location = new Point(10, 50);
+                    Label dateLabel = new Label
+                    {
+                        Text = formattedDate,
+                        AutoSize = true,
+                        Location = new Point(10, 50)
+                    };
 
                     // Кнопка "Подробнее"
-                    Button detailsButton = new Button();
-                    detailsButton.Text = "Подробнее";
-                    detailsButton.Location = new Point(ideaPanel.Width - 100, 10); // Позиция кнопки "Подробнее"
-                    detailsButton.AutoSize = true;
+                    Button detailsButton = new Button
+                    {
+                        Text = "Подробнее",
+                        Location = new Point(ideaPanel.Width - 100, 10), // Позиция кнопки "Подробнее"
+                        AutoSize = true
+                    };
                     detailsButton.Click += (s, e) => ShowIdeaDetails(row); // Обработчик нажатия
-
-                    // Кнопка "Удалить"
-                    Button deleteButton = new Button();
-                    deleteButton.Text = "Удалить";
-                    deleteButton.Location = new Point(ideaPanel.Width - 100, 40); // Позиция кнопки "Удалить"
-                    deleteButton.AutoSize = true;
-                    deleteButton.Click += (s, e) => DeleteIdea(ideaId); // Обработчик нажатия
-
-                    // Кнопка "Редактировать"
-                    Button editButton = new Button();
-                    editButton.Text = "Редактировать";
-                    editButton.Location = new Point(ideaPanel.Width - 100, 70); // Позиция кнопки "Редактировать"
-                    editButton.AutoSize = true;
-                    editButton.Click += (s, e) => EditIdea(ideaId); // Обработчик нажатия
 
                     // Добавляем метки и кнопки в панель идеи
                     ideaPanel.Controls.Add(titleLabel);
                     ideaPanel.Controls.Add(descriptionLabel);
                     ideaPanel.Controls.Add(dateLabel);
                     ideaPanel.Controls.Add(detailsButton);
-                    ideaPanel.Controls.Add(deleteButton);
-                    ideaPanel.Controls.Add(editButton);
+
+                    // Кнопки только для инноватора
+                    if (userRole == 1)
+                    {
+                        Button deleteButton = new Button
+                        {
+                            Text = "Удалить",
+                            Location = new Point(ideaPanel.Width - 100, 40), // Позиция кнопки "Удалить"
+                            AutoSize = true
+                        };
+                        deleteButton.Click += (s, e) => DeleteIdea(ideaId); // Обработчик нажатия
+                        ideaPanel.Controls.Add(deleteButton);
+
+                        Button editButton = new Button
+                        {
+                            Text = "Редактировать",
+                            Location = new Point(ideaPanel.Width - 100, 70), // Позиция кнопки "Редактировать"
+                            AutoSize = true
+                        };
+                        editButton.Click += (s, e) => EditIdea(ideaId); // Обработчик нажатия
+                        ideaPanel.Controls.Add(editButton);
+                    }
+
+                    // Кнопка "Отказаться от работы" только для разработчика
+                    if (userRole == 2)
+                    {
+                        Button declineButton = new Button
+                        {
+                            Text = "Отказаться от работы",
+                            Location = new Point(ideaPanel.Width - 100, 40), // Позиция кнопки "Отказаться от работы"
+                            AutoSize = true
+                        };
+                        declineButton.Click += (s, e) => DeclineWork(ideaId, userId); // Обработчик нажатия
+                        ideaPanel.Controls.Add(declineButton);
+                    }
 
                     // Добавляем панель идеи в panelActivity
                     panelActivity.Controls.Add(ideaPanel);
@@ -251,6 +297,26 @@ namespace App
 
                 // Добавляем отступ снизу
                 panelActivity.Controls.Add(new Panel { Size = new Size(0, 5), Location = new Point(0, currentY) });
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Ошибка: " + ex.Message);
+            }
+        }
+
+
+        // Отказ от работы
+        private void DeclineWork(int ideaId, string userId)
+        {
+            try
+            {
+                // Удаляем запись из таблицы Projects
+                db.RemoveProject(ideaId, userId);
+
+                MessageBox.Show("Вы отказались от работы над этой идеей.", "Успех");
+
+                // Перезагружаем данные идей
+                LoadUserIdeas(userId);
             }
             catch (Exception ex)
             {
@@ -293,8 +359,8 @@ namespace App
             // Примерно так:
             try
             {
-                //EditIdeaForm editForm = new EditIdeaForm(ideaId); // Передаем ideaId в форму редактирования
-                //editForm.ShowDialog();
+                ProfilEditIdea profilEditIdea = new ProfilEditIdea(ideaId); // Передаем ideaId в форму редактирования
+                profilEditIdea.Show();
                 //LoadUserIdeas(userId); // Перезагружаем список идей после редактирования
             }
             catch (Exception ex)
@@ -376,6 +442,11 @@ namespace App
             profilEdit.Show();        }
 
         private void Profil_Load(object sender, EventArgs e)
+        {
+            LoadUserIdeas(userId);
+        }
+
+        private void btnUpdateIdea_Click(object sender, EventArgs e)
         {
             LoadUserIdeas(userId);
         }
