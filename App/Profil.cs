@@ -189,6 +189,10 @@ namespace App
                 {
                     userIdeaData = db.GetDeveloperProjects(userId);
                 }
+                else if (userRole == 3) // Инвестор
+                {
+                    userIdeaData = db.GetInvestorIdeas(userId);
+                }
                 else
                 {
                     throw new Exception("Неизвестная роль пользователя.");
@@ -288,6 +292,19 @@ namespace App
                         ideaPanel.Controls.Add(declineButton);
                     }
 
+                    // Кнопка "Просмотреть инвестиции" только для инвестора
+                    if (userRole == 3)
+                    {
+                        Button viewInvestmentsButton = new Button
+                        {
+                            Text = "Просмотреть инвестиции",
+                            Location = new Point(ideaPanel.Width - 100, 40), // Позиция кнопки "Просмотреть инвестиции"
+                            AutoSize = true
+                        };
+                        viewInvestmentsButton.Click += (s, e) => ShowInvestmentDetails(ideaId, userId); // Обработчик нажатия
+                        ideaPanel.Controls.Add(viewInvestmentsButton);
+                    }
+
                     // Добавляем панель идеи в panelActivity
                     panelActivity.Controls.Add(ideaPanel);
 
@@ -304,6 +321,29 @@ namespace App
             }
         }
 
+        // Метод для отображения деталей инвестиций
+        private void ShowInvestmentDetails(int ideaId, string investorId)
+        {
+            DataTable investments = db.GetInvestmentsByIdeaAndInvestor(ideaId, investorId);
+
+            if (investments.Rows.Count > 0)
+            {
+                string message = "";
+                foreach (DataRow row in investments.Rows)
+                {
+                    decimal amount = Convert.ToDecimal(row["investment_amount"]);
+                    DateTime date = Convert.ToDateTime(row["investment_date"]);
+                    string formattedDate = date.ToString("yyyy-MM-dd");
+                    message += $"Сумма: {amount}\nДата: {formattedDate}\n\n";
+                }
+
+                MessageBox.Show(message, "Инвестиции");
+            }
+            else
+            {
+                MessageBox.Show("Инвестиций не найдено.", "Инвестиции");
+            }
+        }
 
         // Отказ от работы
         private void DeclineWork(int ideaId, string userId)

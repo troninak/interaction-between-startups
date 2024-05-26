@@ -570,6 +570,79 @@ namespace App
             }
         }
 
+        public void AddInvestment(int ideaId, string investorId, decimal amount)
+        {
+            try
+            {
+                openConn();
+
+                string query = "INSERT INTO Investments (investor_id, idea_id, investment_amount, investment_date) VALUES (@investorId, @ideaId, @amount, @date)";
+
+                MySqlCommand command = new MySqlCommand(query, conn);
+                command.Parameters.AddWithValue("@investorId", investorId);
+                command.Parameters.AddWithValue("@ideaId", ideaId);
+                command.Parameters.AddWithValue("@amount", amount);
+                command.Parameters.AddWithValue("@date", DateTime.Now);
+
+                command.ExecuteNonQuery();
+            }
+            finally
+            {
+                closeConn();
+            }
+        }
+
+        public DataTable GetInvestorIdeas(string investorId)
+        {
+            DataTable dt = new DataTable();
+            try
+            {
+                openConn();
+
+                string query = "SELECT i.idea_id, i.idea_title, i.idea_description, i.creation_date " +
+                               "FROM Ideas i " +
+                               "JOIN Investments inv ON i.idea_id = inv.idea_id " +
+                               "WHERE inv.investor_id = @investorId";
+
+                MySqlCommand command = new MySqlCommand(query, conn);
+                command.Parameters.AddWithValue("@investorId", investorId);
+
+                MySqlDataAdapter adapter = new MySqlDataAdapter(command);
+                adapter.Fill(dt);
+            }
+            finally
+            {
+                closeConn();
+            }
+
+            return dt;
+        }
+
+        public DataTable GetInvestmentsByIdeaAndInvestor(int ideaId, string investorId)
+        {
+            DataTable dt = new DataTable();
+            try
+            {
+                openConn();
+
+                string query = "SELECT investment_amount, investment_date " +
+                               "FROM Investments " +
+                               "WHERE idea_id = @ideaId AND investor_id = @investorId";
+
+                MySqlCommand command = new MySqlCommand(query, conn);
+                command.Parameters.AddWithValue("@ideaId", ideaId);
+                command.Parameters.AddWithValue("@investorId", investorId);
+
+                MySqlDataAdapter adapter = new MySqlDataAdapter(command);
+                adapter.Fill(dt);
+            }
+            finally
+            {
+                closeConn();
+            }
+
+            return dt;
+        }
 
     }
 }

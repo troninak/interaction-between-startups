@@ -33,8 +33,14 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.btnLogout = new System.Windows.Forms.Button();
             this.btnProfil = new System.Windows.Forms.Button();
-            this.label2 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.panelIdea = new System.Windows.Forms.Panel();
             this.panel3 = new System.Windows.Forms.Panel();
+            this.comboBoxDate = new System.Windows.Forms.ComboBox();
+            this.btnSave = new System.Windows.Forms.Button();
+            this.label3 = new System.Windows.Forms.Label();
+            this.btnUpdateInvestor = new System.Windows.Forms.Button();
+            this.label2 = new System.Windows.Forms.Label();
             this.panel2.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panel3.SuspendLayout();
@@ -102,43 +108,109 @@
             this.btnProfil.UseVisualStyleBackColor = true;
             this.btnProfil.Click += new System.EventHandler(this.btnProfil_Click);
             // 
-            // label2
+            // label1
             // 
-            this.label2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label2.ForeColor = System.Drawing.Color.IndianRed;
-            this.label2.Location = new System.Drawing.Point(0, 0);
-            this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(1400, 713);
-            this.label2.TabIndex = 6;
-            this.label2.Text = "Вы вошли как Инвестор";
-            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label1.Location = new System.Drawing.Point(12, 85);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(139, 25);
+            this.label1.TabIndex = 7;
+            this.label1.Text = "Список идей";
+            // 
+            // panelIdea
+            // 
+            this.panelIdea.AutoScroll = true;
+            this.panelIdea.BackColor = System.Drawing.Color.LightGray;
+            this.panelIdea.Location = new System.Drawing.Point(11, 121);
+            this.panelIdea.Name = "panelIdea";
+            this.panelIdea.Size = new System.Drawing.Size(979, 667);
+            this.panelIdea.TabIndex = 9;
             // 
             // panel3
             // 
-            this.panel3.Controls.Add(this.label2);
-            this.panel3.Location = new System.Drawing.Point(0, 75);
+            this.panel3.BackColor = System.Drawing.Color.LightGray;
+            this.panel3.Controls.Add(this.comboBoxDate);
+            this.panel3.Controls.Add(this.btnSave);
+            this.panel3.Controls.Add(this.label3);
+            this.panel3.Location = new System.Drawing.Point(1004, 121);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(1400, 713);
-            this.panel3.TabIndex = 7;
+            this.panel3.Size = new System.Drawing.Size(385, 667);
+            this.panel3.TabIndex = 10;
+            // 
+            // comboBoxDate
+            // 
+            this.comboBoxDate.FormattingEnabled = true;
+            this.comboBoxDate.Location = new System.Drawing.Point(43, 75);
+            this.comboBoxDate.Name = "comboBoxDate";
+            this.comboBoxDate.Size = new System.Drawing.Size(299, 21);
+            this.comboBoxDate.TabIndex = 2;
+            // 
+            // btnSave
+            // 
+            this.btnSave.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.btnSave.Location = new System.Drawing.Point(43, 596);
+            this.btnSave.Name = "btnSave";
+            this.btnSave.Size = new System.Drawing.Size(299, 55);
+            this.btnSave.TabIndex = 1;
+            this.btnSave.Text = "Применить";
+            this.btnSave.UseVisualStyleBackColor = true;
+            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label3.Location = new System.Drawing.Point(40, 56);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(124, 16);
+            this.label3.TabIndex = 0;
+            this.label3.Text = "По дате создания";
+            // 
+            // btnUpdateInvestor
+            // 
+            this.btnUpdateInvestor.Location = new System.Drawing.Point(906, 85);
+            this.btnUpdateInvestor.Margin = new System.Windows.Forms.Padding(2);
+            this.btnUpdateInvestor.Name = "btnUpdateInvestor";
+            this.btnUpdateInvestor.Size = new System.Drawing.Size(84, 30);
+            this.btnUpdateInvestor.TabIndex = 11;
+            this.btnUpdateInvestor.Text = "Обновить";
+            this.btnUpdateInvestor.UseVisualStyleBackColor = true;
+            this.btnUpdateInvestor.Click += new System.EventHandler(this.btnUpdateInvestor_Click);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label2.Location = new System.Drawing.Point(999, 85);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(131, 25);
+            this.label2.TabIndex = 8;
+            this.label2.Text = "Сортировка";
             // 
             // MainInvestor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1400, 800);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.panelIdea);
             this.Controls.Add(this.panel3);
+            this.Controls.Add(this.btnUpdateInvestor);
+            this.Controls.Add(this.label2);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.panel2);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "MainInvestor";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "MainInvestor";
+            this.Load += new System.EventHandler(this.MainInvestor_Load);
             this.panel2.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.panel3.ResumeLayout(false);
+            this.panel3.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -149,7 +221,13 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button btnLogout;
         private System.Windows.Forms.Button btnProfil;
-        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Panel panelIdea;
         private System.Windows.Forms.Panel panel3;
+        private System.Windows.Forms.ComboBox comboBoxDate;
+        private System.Windows.Forms.Button btnSave;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Button btnUpdateInvestor;
+        private System.Windows.Forms.Label label2;
     }
 }
